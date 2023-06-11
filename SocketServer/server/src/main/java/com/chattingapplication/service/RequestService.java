@@ -14,7 +14,7 @@ import com.google.gson.Gson;
 public class RequestService {
     static String apiUrl = "http://localhost:8080/api/";
     
-    public static String GetRequest(String path) throws IOException, InterruptedException {
+    public static String getRequest(String path) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(apiUrl + path))
@@ -28,7 +28,7 @@ public class RequestService {
         }
     }
 
-    public static String PostRequest(String path, String jsonString) throws IOException, InterruptedException {
+    public static String postRequest(String path, String jsonString) throws IOException, InterruptedException {
         HashMap<String, Object> values = new Gson().fromJson(jsonString, HashMap.class);
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -54,7 +54,7 @@ public class RequestService {
         }
     }
 
-    public static String PutRequest(String path, String jsonString) throws IOException, InterruptedException {
+    public static String putRequest(String path, String jsonString) throws IOException, InterruptedException {
         HashMap<String, Object> values = new Gson().fromJson(jsonString, HashMap.class);
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -80,7 +80,7 @@ public class RequestService {
         }
     }
 
-    public static String DeleteRequest(String path) throws IOException, InterruptedException {
+    public static String deleteRequest(String path) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(apiUrl + path))

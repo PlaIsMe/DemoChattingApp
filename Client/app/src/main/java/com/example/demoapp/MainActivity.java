@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void RegisterResponse(String jsonString) {
+    public void registerResponse(String jsonString) {
         Gson gson = new Gson();
         try {
             Account currentAccount = gson.fromJson(jsonString, Account.class);
@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void ChattingResponse(String message) {
+    public void chattingResponse(String message) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
         String ResponseParam;
     }
 
-    public void HandleResponse(String jsonResponse) {
+    public void handleResponse(String jsonResponse) {
         Gson gson = new Gson();
         Response response = gson.fromJson(jsonResponse, Response.class);
         try {
@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void AppendOtherMsg(String message) {
+    public void appendOtherMsg(String message) {
         LinearLayout linearLayout = findViewById(R.id.layoutReceive);
         TextView otherMsg = new TextView(this);
         otherMsg.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
         linearLayout.addView(otherMsg);
     }
 
-    public void Register(View v) throws IOException {
+    public void register(View v) throws IOException {
         EditText editTextUserName = findViewById(R.id.editTxtName);
         EditText editTextEmail = findViewById(R.id.editTxtEmail);
         EditText editTextPassword = findViewById(R.id.editTxtPassword);
@@ -174,15 +174,15 @@ public class MainActivity extends AppCompatActivity {
             throw new RuntimeException(e);
         }
         SendTask sendTask = new SendTask();
-        sendTask.execute("RegisterRequest", jsonString);
+        sendTask.execute("registerRequest", jsonString);
     }
 
-    public void SendMessage(View view) {
+    public void sendMessage(View view) {
         EditText editTxtMessage = findViewById(R.id.editTxtMessage);
         String message = editTxtMessage.getText().toString();
         editTxtMessage.setText("");
         SendTask sendTask = new SendTask();
-        sendTask.execute("ChattingRequest", message);
+        sendTask.execute("chattingRequest", message);
         LinearLayout linearLayout = findViewById(R.id.layoutReceive);
         TextView myMsg = new TextView(this);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -195,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
         linearLayout.addView(myMsg);
     }
 
-    public void CloseClient() {
+    public void closeClient() {
         try {
             if (clientFd != null) {
                 clientFd.close();

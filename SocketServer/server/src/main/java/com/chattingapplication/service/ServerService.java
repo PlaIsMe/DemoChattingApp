@@ -18,18 +18,18 @@ import com.google.gson.JsonSyntaxException;
 public class ServerService {
     public static ArrayList<ClientHandleService> clientHandlers = new ArrayList<>();
 
-    public static String SocketReceive(ClientHandleService clientHandleService) {
+    public static String socketReceive(ClientHandleService clientHandleService) {
         try {
             return clientHandleService.getdIn().readUTF();           
         } catch (EOFException e) {
-            clientHandleService.CloseClientSocket();
+            clientHandleService.closeClientSocket();
         } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public static void SocketSend(ClientHandleService clientHandleService, String responseName, String responseParam) {
+    public static void socketSend(ClientHandleService clientHandleService, String responseName, String responseParam) {
         String message;
         try {
             message = new JSONObject()
@@ -47,16 +47,16 @@ public class ServerService {
         }
     }
 
-    public static void ChattingRequest(ClientHandleService clientHandleService, String message) {
+    public static void chattingRequest(ClientHandleService clientHandleService, String message) {
         for (ClientHandleService client: clientHandlers) {
             if (client.getClientSocket() != clientHandleService.getClientSocket()) {
-                SocketSend(client, "ChattingResponse", clientHandleService.getClientAccount().getUsername() + ": " + message);
+                socketSend(client, "chattingResponse", clientHandleService.getClientAccount().getUsername() + ": " + message);
             }
         }
     }
 
-    public static void RegisterRequest(ClientHandleService clientHandleService, String jsonString) throws IOException, InterruptedException {
-        String response = RequestService.PostRequest("account/signin", jsonString);
+    public static void registerRequest(ClientHandleService clientHandleService, String jsonString) throws IOException, InterruptedException {
+        String response = RequestService.postRequest("account/signin", jsonString);
         Gson gson = new Gson();
         try {
             Account currentAccount = gson.fromJson(response, Account.class);
@@ -64,7 +64,7 @@ public class ServerService {
         } catch (JsonSyntaxException e) {
 
         }
-        ServerService.SocketSend(clientHandleService, "RegisterResponse", response);
+        ServerService.socketSend(clientHandleService, "registerResponse", response);
     }
 
     class Request {
@@ -72,7 +72,7 @@ public class ServerService {
         String RequestParam;
     }
 
-    public static void HandleRequest(ClientHandleService clientHandleService, String jsonRequest) throws NoSuchMethodException, SecurityException, IllegalAccessException, InvocationTargetException {
+    public static void handleRequest(ClientHandleService clientHandleService, String jsonRequest) throws NoSuchMethodException, SecurityException, IllegalAccessException, InvocationTargetException {
         System.out.println(jsonRequest);
         Gson gson = new Gson();
         Request request = gson.fromJson(jsonRequest, Request.class);
@@ -80,7 +80,7 @@ public class ServerService {
         method.invoke(null, clientHandleService, request.RequestParam);
     }
 
-    public static void HandleConnect(ServerSocket serverSocket) throws IOException {
+    public static void handleConnect(ServerSocket serverSocket) throws IOException {
         while (!serverSocket.isClosed()) {
             Socket clientSocket = serverSocket.accept();
             ClientHandleService clientHandleService = new ClientHandleService(clientSocket);
@@ -90,7 +90,7 @@ public class ServerService {
         }
     }
 
-    public static void ShutDownServer(ServerSocket serverSocket) throws IOException {
+    public static void shutDownServer(ServerSocket serverSocket) throws IOException {
         if (serverSocket != null) {
             serverSocket.close();
         }

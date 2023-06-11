@@ -55,16 +55,16 @@ public class ClientHandleService implements Runnable {
             this.dIn = new DataInputStream(clientSocket.getInputStream());
             this.dOut = new DataOutputStream(clientSocket.getOutputStream());
         } catch (IOException e) {
-            CloseClientSocket();
+            closeClientSocket();
         }
     }
 
-    public void RemoveClient() {
+    public void removeClient() {
         ServerService.clientHandlers.remove(this);
     }
 
-    public void CloseClientSocket() {
-        this.RemoveClient();        
+    public void closeClientSocket() {
+        this.removeClient();
         try {
             dIn.close();
             dOut.close();
@@ -77,13 +77,13 @@ public class ClientHandleService implements Runnable {
     @Override
     public void run() {
         while (clientSocket.isConnected()) {
-            String buffer = ServerService.SocketReceive(this);
+            String buffer = ServerService.socketReceive(this);
             if (buffer == null) {
-                CloseClientSocket();
+                closeClientSocket();
                 break;
             } else {
                 try {
-                    ServerService.HandleRequest(this, buffer);
+                    ServerService.handleRequest(this, buffer);
                 } catch (NoSuchMethodException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();

@@ -55,7 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="64dp"
-            android:onClick="Register"
+            android:onClick="register"
             android:text="Register"
             app:layout_constraintEnd_toEndOf="@+id/editTxtPassword"
             app:layout_constraintStart_toStartOf="@+id/editTxtPassword"
