@@ -72,7 +72,7 @@ public class ServerService {
         String RequestParam;
     }
 
-    public static void HandleRequest(ClientHandleService clientHandleService, String jsonRequest) throws IOException, InterruptedException, ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, SecurityException, InvocationTargetException {
+    public static void HandleRequest(ClientHandleService clientHandleService, String jsonRequest) throws NoSuchMethodException, SecurityException, IllegalAccessException, InvocationTargetException {
         System.out.println(jsonRequest);
         Gson gson = new Gson();
         Request request = gson.fromJson(jsonRequest, Request.class);

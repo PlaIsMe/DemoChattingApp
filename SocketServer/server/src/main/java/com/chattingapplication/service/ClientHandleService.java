@@ -77,42 +77,26 @@ public class ClientHandleService implements Runnable {
     @Override
     public void run() {
         while (clientSocket.isConnected()) {
-            try {
-                String buffer = ServerService.SocketReceive(this);
-                if (buffer == null) {
-                    CloseClientSocket();
-                    break;
-                } else {
-                    try {
-                        ServerService.HandleRequest(this, buffer);
-                    } catch (ClassNotFoundException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    } catch (InstantiationException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    } catch (IllegalAccessException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    } catch (NoSuchMethodException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    } catch (SecurityException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    } catch (InvocationTargetException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                }
-            } catch (IOException | InterruptedException e) {
+            String buffer = ServerService.SocketReceive(this);
+            if (buffer == null) {
                 CloseClientSocket();
-                try {
-                    Thread.currentThread().join();
-                } catch (InterruptedException e1) {
-                    e1.printStackTrace();
-                }
                 break;
+            } else {
+                try {
+                    ServerService.HandleRequest(this, buffer);
+                } catch (NoSuchMethodException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (SecurityException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
             }
         }
     }
