@@ -3,10 +3,13 @@ package com.chattingapplication.service;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.Socket;
 import java.util.ArrayList;
 
 import com.chattingapplication.model.Account;
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 public class ClientHandleService implements Runnable {
     private Socket clientSocket;
@@ -80,7 +83,27 @@ public class ClientHandleService implements Runnable {
                     CloseClientSocket();
                     break;
                 } else {
-                    ServerService.HandlePattern(this, buffer);
+                    try {
+                        ServerService.HandleRequest(this, buffer);
+                    } catch (ClassNotFoundException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    } catch (InstantiationException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    } catch (IllegalAccessException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    } catch (NoSuchMethodException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    } catch (SecurityException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    } catch (InvocationTargetException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
                 }
             } catch (IOException | InterruptedException e) {
                 CloseClientSocket();
