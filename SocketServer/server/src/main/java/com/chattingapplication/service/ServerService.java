@@ -12,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.chattingapplication.model.Account;
+import com.chattingapplication.model.Request;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
@@ -33,8 +34,8 @@ public class ServerService {
         String message;
         try {
             message = new JSONObject()
-                    .put("ResponseFunction", responseName)
-                    .put("ResponseParam", responseParam)
+                    .put("responseFunction", responseName)
+                    .put("responseParam", responseParam)
                     .toString();
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -67,17 +68,13 @@ public class ServerService {
         ServerService.socketSend(clientHandleService, "registerResponse", response);
     }
 
-    class Request {
-        String RequestFunction;
-        String RequestParam;
-    }
 
     public static void handleRequest(ClientHandleService clientHandleService, String jsonRequest) throws NoSuchMethodException, SecurityException, IllegalAccessException, InvocationTargetException {
         System.out.println(jsonRequest);
         Gson gson = new Gson();
         Request request = gson.fromJson(jsonRequest, Request.class);
-        Method method = ServerService.class.getMethod(request.RequestFunction, ClientHandleService.class ,String.class);
-        method.invoke(null, clientHandleService, request.RequestParam);
+        Method method = ServerService.class.getMethod(request.getRequestFunction(), ClientHandleService.class ,String.class);
+        method.invoke(null, clientHandleService, request.getRequestParam());
     }
 
     public static void handleConnect(ServerSocket serverSocket) throws IOException {
@@ -89,6 +86,12 @@ public class ServerService {
             thread.start();
         }
     }
+
+    public static void removeClient(ClientHandleService clientHandleService) {
+        clientHandleService.closeClientSocket();
+        ServerService.clientHandlers.remove(clientHandleService);
+    }
+
 
     public static void shutDownServer(ServerSocket serverSocket) throws IOException {
         if (serverSocket != null) {

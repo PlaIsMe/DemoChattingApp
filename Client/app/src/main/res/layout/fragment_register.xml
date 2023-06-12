@@ -60,15 +60,5 @@
             app:layout_constraintEnd_toEndOf="@+id/editTxtPassword"
             app:layout_constraintStart_toStartOf="@+id/editTxtPassword"
             app:layout_constraintTop_toBottomOf="@+id/editTxtPassword" />
-
-        <TextView
-            android:id="@+id/txtRegisterResult"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            app:layout_constraintBottom_toTopOf="@+id/btnRegister"
-            app:layout_constraintEnd_toEndOf="@+id/editTxtPassword"
-            app:layout_constraintStart_toStartOf="@+id/editTxtPassword"
-            app:layout_constraintTop_toBottomOf="@+id/editTxtPassword" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

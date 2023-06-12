@@ -9,10 +9,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.demoapp.Model.Account;
+import com.example.demoapp.Model.Response;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
@@ -81,8 +83,8 @@ public class MainActivity extends AppCompatActivity {
             String request;
             try {
                 request = new JSONObject()
-                        .put("RequestFunction", params[0])
-                        .put("RequestParam", params[1])
+                        .put("requestFunction", params[0])
+                        .put("requestParam", params[1])
                         .toString();
             } catch (JSONException e) {
                 throw new RuntimeException(e);
@@ -111,8 +113,7 @@ public class MainActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    TextView txtRegisterView = findViewById(R.id.txtRegisterResult);
-                    txtRegisterView.setText(jsonString);
+                    Toast.makeText(getApplicationContext(), jsonString, Toast.LENGTH_LONG).show();
                 }
             });
         }
@@ -127,18 +128,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    class Response {
-        String ResponseFunction;
-        String ResponseParam;
-    }
-
     public void handleResponse(String jsonResponse) {
         Gson gson = new Gson();
         Response response = gson.fromJson(jsonResponse, Response.class);
         try {
             Class<?> c = Class.forName(getPackageName() + ".MainActivity");
-            Method method = c.getDeclaredMethod(response.ResponseFunction, String.class);
-            method.invoke(this, response.ResponseParam);
+            Method method = c.getDeclaredMethod(response.getResponseFunction(), String.class);
+            method.invoke(this, response.getResponseParam());
         } catch (ClassNotFoundException | NoSuchMethodException e) {
             throw new RuntimeException(e);
         } catch (InvocationTargetException e) {

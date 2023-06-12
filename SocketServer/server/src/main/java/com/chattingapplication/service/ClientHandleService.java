@@ -5,11 +5,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.Socket;
-import java.util.ArrayList;
 
 import com.chattingapplication.model.Account;
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 
 public class ClientHandleService implements Runnable {
     private Socket clientSocket;
@@ -55,16 +52,11 @@ public class ClientHandleService implements Runnable {
             this.dIn = new DataInputStream(clientSocket.getInputStream());
             this.dOut = new DataOutputStream(clientSocket.getOutputStream());
         } catch (IOException e) {
-            closeClientSocket();
+            ServerService.removeClient(this);
         }
     }
 
-    public void removeClient() {
-        ServerService.clientHandlers.remove(this);
-    }
-
     public void closeClientSocket() {
-        this.removeClient();
         try {
             dIn.close();
             dOut.close();
@@ -79,7 +71,7 @@ public class ClientHandleService implements Runnable {
         while (clientSocket.isConnected()) {
             String buffer = ServerService.socketReceive(this);
             if (buffer == null) {
-                closeClientSocket();
+                ServerService.removeClient(this);
                 break;
             } else {
                 try {
