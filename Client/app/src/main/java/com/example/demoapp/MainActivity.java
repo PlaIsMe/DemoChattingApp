@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                     while (clientFd.isConnected()) {
                         try {
                             response = dIn.readUTF();
-                            HandleResponse(response);
+                            handleResponse(response);
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                AppendOtherMsg(message);
+                appendOtherMsg(message);
             }
         });
     }
