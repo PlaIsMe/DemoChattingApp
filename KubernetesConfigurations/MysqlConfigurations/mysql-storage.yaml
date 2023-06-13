@@ -5,15 +5,19 @@ metadata:
   labels:
     app: mysql-pv
     tier: database
-    type: lcoal-storage
+    type: local-storage
 spec:
-  storageClassName: lcoal-storage
+  storageClassName: local-storage
   capacity:
-    storage: 2Gi
+    storage: 10Gi
   accessModes:
     - ReadWriteOnce
-  hostPath:
-    path: "mnt/data"
+  claimRef:
+    namespace: default
+    name: mysql-pv-claim
+  gcePersistentDisk:
+    pdName: local-storage
+    fsType: ext4
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -23,8 +27,9 @@ metadata:
     app: mysql-pv-claim
     tier: database
 spec:
+  storageClassName: local-storage
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi 
+      storage: 4Gi
