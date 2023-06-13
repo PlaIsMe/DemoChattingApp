@@ -4,4 +4,4 @@ metadata:
   name: mysql-config
 data:
  host: mysql
- dbName: qldatphong
+ dbName: chattingdatabase
