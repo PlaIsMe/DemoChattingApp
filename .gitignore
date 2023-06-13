@@ -1,6 +1,11 @@
 # Created by https://www.toptal.com/developers/gitignore/api/androidstudio,java,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=androidstudio,java,visualstudiocode
 
+### Spring boot ###
+target/
+!**/src/main/**/target/
+!**/src/test/**/target/
+
 ### Java ###
 # Compiled class file
 *.class

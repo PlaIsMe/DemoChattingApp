@@ -1,0 +1,5 @@
+FROM openjdk:17-jdk-alpine
+WORKDIR /springbootserver
+
+COPY ./target/*.jar springbootserver.jar
+CMD ["java", "-jar", "./springbootserver.jar"]
