@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: springbootserver
+spec:
+  selector:
+    matchLabels:
+      app: springbootserver
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: springbootserver
+    spec:
+      containers:
+        - name: springbootserver
+          image: phonglai0809/springbootserver:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_HOST
+              valueFrom :
+                configMapKeyRef :
+                  name : mysql-config
+                  key :  host
+            - name: DB_NAME
+              valueFrom :
+                configMapKeyRef :
+                  name : mysql-config
+                  key :  dbName
+            - name: DB_USERNAME
+              valueFrom :
+                secretKeyRef :
+                  name : mysql-secret
+                  key :  username
+            - name: DB_PASSWORD
+              valueFrom :
+                secretKeyRef :
+                  name : mysql-secret
+                  key :  password
