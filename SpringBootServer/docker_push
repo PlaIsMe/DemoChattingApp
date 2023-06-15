@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+execute() {
+    docker build -t springbootserver:latest .
+    docker tag springbootserver:latest phonglai0809/springbootserver:latest
+    docker push phonglai0809/springbootserver:latest
+}
+
+main() {
+    execute ()
+}
+
+main $@ 

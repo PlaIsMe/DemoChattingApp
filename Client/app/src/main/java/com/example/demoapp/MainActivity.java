@@ -1,5 +1,6 @@
 package com.example.demoapp;
 
+import android.app.Fragment;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -29,7 +30,7 @@ import java.lang.reflect.Method;
 import java.net.Socket;
 
 public class MainActivity extends AppCompatActivity {
-    String SERVER_IP = "192.168.1.245";
+    String SERVER_IP = "34.143.156.68";
     int SERVER_PORT = 8081;
     Socket clientFd;
     static DataOutputStream dOut;
@@ -145,14 +146,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void appendOtherMsg(String message) {
-        LinearLayout linearLayout = findViewById(R.id.layoutReceive);
-        TextView otherMsg = new TextView(this);
-        otherMsg.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT));
-        otherMsg.setText(message);
-        otherMsg.setBackgroundColor(Color.parseColor("#808080"));
-        otherMsg.setPadding(20, 20, 20, 20);// in pixels (left, top, right, bottom)
-        linearLayout.addView(otherMsg);
+        try {
+            LinearLayout linearLayout = findViewById(R.id.layoutReceive);
+            TextView otherMsg = new TextView(this);
+            otherMsg.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT));
+            otherMsg.setText(message);
+            otherMsg.setBackgroundColor(Color.parseColor("#808080"));
+            otherMsg.setPadding(20, 20, 20, 20);// in pixels (left, top, right, bottom)
+            linearLayout.addView(otherMsg);
+        } catch (NullPointerException e) {
+
+        }
     }
 
     public void register(View v) throws IOException {

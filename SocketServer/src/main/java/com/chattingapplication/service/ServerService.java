@@ -78,6 +78,7 @@ public class ServerService {
     }
 
     public static void handleConnect(ServerSocket serverSocket) throws IOException {
+        System.out.println("Server started!");
         while (!serverSocket.isClosed()) {
             Socket clientSocket = serverSocket.accept();
             ClientHandleService clientHandleService = new ClientHandleService(clientSocket);

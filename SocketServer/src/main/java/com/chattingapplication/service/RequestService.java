@@ -12,7 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
 public class RequestService {
-    static String apiUrl = "http://localhost:8080/api/";
+    static String apiUrl = "http://10.57.129.180:8080/api/";
     
     public static String getRequest(String path) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();

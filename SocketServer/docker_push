@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+execute() {
+    docker build -t socketserver:latest .
+    docker tag socketserver:latest phonglai0809/socketserver:latest
+    docker push phonglai0809/socketserver:latest
+}
+
+main() {
+    execute ()
+}
+
+main $@ 

@@ -1,6 +1,7 @@
-FROM openjdk:17-alpine
+FROM openjdk:17-jdk-alpine
 
 WORKDIR /socketserver
-COPY ./server/target/*.jar ./socket_server.jar
+COPY ./target/*.jar socketserver.jar
+EXPOSE 8081
 
-CMD ["java", "-jar", "socket_server.jar"]
+CMD ["java", "-cp", "socketserver.jar", "com.chattingapplication.Main"]
